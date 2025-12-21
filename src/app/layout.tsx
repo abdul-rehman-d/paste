@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${bitcountGridDouble.variable} antialiased min-h-svh font-inter flex flex-col bg-neutral-900 text-neutral-100`}
+        className={`${inter.variable} ${bitcountGridDouble.variable} antialiased min-h-svh font-inter flex flex-col`}
       >
         <div className="grow w-full max-w-5xl mx-auto text-sm sm:text-base lg:text-lg flex flex-col gap-8 py-12 px-8">
           {children}

@@ -16,9 +16,9 @@ export default function WithNavAndFooterLayout({
         </h1>
       </header>
 
-      <main className="grow text-neutral-400">{children}</main>
+      <main className="grow">{children}</main>
 
-      <footer className="border-t py-4 text-neutral-400 text-xs sm:text-sm">
+      <footer className="border-t py-4 text-xs sm:text-sm">
         <p>
           © {new Date().getFullYear()}{" "}
           <a href={data.mainWebsite} className="underline">
