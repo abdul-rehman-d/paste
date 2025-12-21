@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import { CreateARoomButton } from "@/components/create-room-button";
+
 export default function Home() {
   return (
     <div className="space-y-4">
@@ -10,12 +11,7 @@ export default function Home() {
         height={226}
         unoptimized
       />
-      <Link
-        href="/create"
-        className="text-orange-600 hover:text-orange-700 dark:text-orange-300 dark:hover:text-orange-400 underline underline-offset-2 font-bold py-1 cursor-pointer"
-      >
-        Create a room
-      </Link>
+      <CreateARoomButton />
     </div>
   );
 }
