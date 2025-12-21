@@ -1,4 +1,6 @@
 "use client";
+
+import { useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,13 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
+import { FORMS_ID } from "@/lib/constants";
+import { CreateRoomForm } from "./create-room-form";
 
 export function CreateARoomButton() {
+  const [open, setOpen] = useState(false);
+
   return (
     <Dialog>
       <DialogTrigger className={buttonVariants({ variant: "default" })}>
@@ -23,25 +24,14 @@ export function CreateARoomButton() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a Room</DialogTitle>
-          <InputOTPDemo />
+          <CreateRoomForm open={open} />
         </DialogHeader>
         <DialogFooter className="border-t py-2">
-          <Button>Create</Button>
+          <Button type="submit" form={FORMS_ID.CREATE_ROOM_FORM}>
+            Create
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-}
-
-function InputOTPDemo() {
-  return (
-    <InputOTP maxLength={4}>
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-        <InputOTPSlot index={3} />
-      </InputOTPGroup>
-    </InputOTP>
   );
 }
