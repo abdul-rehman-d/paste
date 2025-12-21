@@ -1,5 +1,6 @@
 import Link from "next/link";
 import data from "@/data.json";
+import { ConvexClientProvider } from "@/providers/convex-client-provider";
 
 export default function WithNavAndFooterLayout({
   children,
@@ -7,7 +8,7 @@ export default function WithNavAndFooterLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <ConvexClientProvider>
       <header>
         <h1 className="text-2xl sm:text-3xl font-bitcount-grid-double">
           <Link href="/" className="text-indigo-400">
@@ -34,6 +35,6 @@ export default function WithNavAndFooterLayout({
           built with AI, btw
         </p>
       </footer>
-    </>
+    </ConvexClientProvider>
   );
 }
