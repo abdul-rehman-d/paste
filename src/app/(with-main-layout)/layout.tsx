@@ -16,17 +16,22 @@ export default function WithNavAndFooterLayout({
         </h1>
       </header>
 
-      <main className="grow text-neutral-500 dark:text-neutral-400">
-        {children}
-      </main>
+      <main className="grow text-neutral-400">{children}</main>
 
-      <footer className="border-t py-4 text-neutral-500 dark:text-neutral-400">
-        <p className="text-xs sm:text-sm">
-          © {new Date().getFullYear()}
+      <footer className="border-t py-4 text-neutral-400 text-xs sm:text-sm">
+        <p>
+          © {new Date().getFullYear()}{" "}
           <a href={data.mainWebsite} className="underline">
             {data.mainWebsiteTitle}
           </a>
           . All rights reserved.
+        </p>
+        <p>
+          built with love and{" "}
+          <i>
+            <strong>not</strong>
+          </i>{" "}
+          built with AI, btw
         </p>
       </footer>
     </>
