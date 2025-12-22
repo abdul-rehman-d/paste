@@ -6,7 +6,7 @@ export default defineSchema({
     name: v.string(),
     slug: v.string(),
     pinHash: v.string(), // store HASHED pin, never plaintext
-  }),
+  }).index("by_slug", ["slug"]),
 
   items: defineTable({
     roomId: v.id("rooms"),
