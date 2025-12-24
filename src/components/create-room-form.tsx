@@ -14,7 +14,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { FORMS_ID } from "@/lib/constants";
-import { createRoomAction, validateRoomNameUnique } from "@/app/actions";
+import { createRoomAction } from "@/app/actions";
 
 const RoomSchema = z.object({
   roomName: z.string().min(1, "Room name is required"),
@@ -32,14 +32,15 @@ export function CreateRoomForm({ open }: { open: boolean }) {
     },
     validators: {
       onSubmit: RoomSchema,
-      onSubmitAsync: async ({ value }) => {
-        const err = await validateRoomNameUnique({ roomName: value.roomName });
-        if (err) return err;
-      },
     },
     onSubmit: async ({ value }) => {
       try {
-        await createRoomAction(value);
+        const errorMap = await createRoomAction(value);
+        form.setErrorMap({
+          onSubmit: {
+            ...(errorMap ?? {}),
+          },
+        });
       } catch (error) {
         console.error("Failed to create room:", error);
       }

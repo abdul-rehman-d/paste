@@ -17,7 +17,7 @@ export function CreateARoomButton() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className={buttonVariants({ variant: "default" })}>
         Create a Room
       </DialogTrigger>

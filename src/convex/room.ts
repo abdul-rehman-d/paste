@@ -16,14 +16,15 @@ export const createRoom = mutation({
   },
 });
 
-export const checkRoomSlugExists = query({
+export const getRoom = query({
   args: {
     slug: v.string(),
   },
   handler: async (ctx, args) => {
-    const room = await ctx.db.query("rooms")
-      .filter(q => q.eq(q.field("slug"), args.slug))
+    const room = await ctx.db
+      .query("rooms")
+      .filter((q) => q.eq(q.field("slug"), args.slug))
       .first();
-    return room !== null;
+    return room;
   },
 });
