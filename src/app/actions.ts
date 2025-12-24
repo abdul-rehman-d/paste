@@ -7,6 +7,8 @@ import { api } from "@/convex/_generated/api";
 import { getSession } from "@/lib/session";
 import { slugify } from "@/lib/utils";
 
+// ROOM MANAGEMENT
+
 export async function createRoomAction(input: {
   roomName: string;
   pin: string;
@@ -53,6 +55,8 @@ export async function createRoomAction(input: {
   redirect(`/${roomSlug}`);
 }
 
+// SESSION MANAGEMENT
+
 export async function unlockRoom(input: { roomSlug: string; pin: string }) {
   const slug = input.roomSlug.trim() ?? "";
   const pin = input.pin.trim() ?? "";
@@ -85,4 +89,29 @@ export async function lockRoom() {
   session.destroy();
 
   redirect(`/${roomSlug}/`);
+}
+
+// ITEM MANAGEMENT
+
+export async function addItemAction(input: { text: string; roomSlug: string }) {
+  const text = input.text.trim();
+
+  const room = await fetchQuery(api.room.getRoom, { slug: input.roomSlug });
+  if (!room) {
+    return { form: { message: "Room not found" }, fields: {} };
+  }
+
+  const roomId = room._id;
+
+  if (!text) {
+    return { fields: { text: { message: "Text is required" } } };
+  }
+
+  const id = await fetchMutation(api.item.addItem, { text, roomId });
+
+  if (!id) {
+    return { form: { message: "Could not add item" }, fields: {} };
+  }
+
+  return;
 }

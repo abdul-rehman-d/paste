@@ -4,6 +4,7 @@ import { useQuery } from "convex/react";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { lockRoom } from "@/app/actions";
+import { AddItemForm } from "@/components/add-item-form";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
@@ -11,13 +12,13 @@ import type { Doc } from "@/convex/_generated/dataModel";
 export default function RoomPageClient({ roomSlug }: { roomSlug: string }) {
   return (
     <>
-      <div className="flex justify-end">
-        {/* <form action={lockRoom}>
-          <Button type="submit">Lock Room</Button>
-        </form> */}
-      </div>
+      <form action={lockRoom}>
+        <Button type="submit">Lock Room</Button>
+      </form>
 
-      <div className="space-y-4">
+      <AddItemForm roomSlug={roomSlug} />
+
+      <div className="mt-4 space-y-4">
         <ItemsList roomSlug={roomSlug} />
       </div>
     </>
@@ -30,7 +31,7 @@ function ItemsList({ roomSlug }: { roomSlug: string }) {
   if (!items) return <p>loading...</p>;
 
   if (!items.length) {
-    return <p>no items</p>;
+    return <p>nothing saved yet</p>;
   }
 
   return items.map((item) => <Item key={item._id} item={item} />);
@@ -44,7 +45,7 @@ function Item({ item }: { item: Doc<"items"> }) {
   return (
     <div className="">
       <Button
-        className="flex border rounded-xs p-4 w-full"
+        className="flex border rounded-xs p-4 w-full text-lg"
         variant="boring"
         onClick={copy}
       >

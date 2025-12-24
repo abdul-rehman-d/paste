@@ -1,5 +1,5 @@
-import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { mutation, query } from "./_generated/server";
 
 export const addItem = mutation({
   args: {
@@ -31,6 +31,7 @@ export const listByRoom = query({
     return await ctx.db
       .query("items")
       .withIndex("by_room", (q) => q.eq("roomId", room._id))
+      .order("desc")
       .collect();
   },
 });
