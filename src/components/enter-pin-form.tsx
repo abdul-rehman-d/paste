@@ -64,8 +64,12 @@ export function EnterPinForm({ roomSlug }: { roomSlug: string }) {
           children={(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;
+
             return (
-              <Field data-invalid={isInvalid}>
+              <Field
+                data-invalid={isInvalid}
+                data-disabled={field.form.state.isSubmitting}
+              >
                 <FieldLabel
                   htmlFor={field.name}
                   className="text-lg text-center"
@@ -74,9 +78,17 @@ export function EnterPinForm({ roomSlug }: { roomSlug: string }) {
                 </FieldLabel>
                 <div className="flex flex-col gap-2">
                   <InputOTP
+                    autoFocus
                     maxLength={4}
                     value={field.state.value}
-                    onChange={(val: string) => field.handleChange(val)}
+                    disabled={field.form.state.isSubmitting}
+                    onChange={(val: string) => {
+                      field.handleChange(val);
+                      // Autosubmit when the PIN reaches 4 characters
+                      if (val && val.length === 4) {
+                        form.handleSubmit();
+                      }
+                    }}
                   >
                     <InputOTPGroup>
                       {[0, 1, 2, 3].map((i) => (
