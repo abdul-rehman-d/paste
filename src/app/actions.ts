@@ -77,3 +77,12 @@ export async function unlockRoom(input: { roomSlug: string; pin: string }) {
 
   redirect(`/${slug}/unlocked`);
 }
+
+export async function lockRoom() {
+  const session = await getSession();
+  const roomSlug = session.unlockedRoom;
+  session.unlockedRoom = "";
+  session.destroy();
+
+  redirect(`/${roomSlug}/`);
+}
