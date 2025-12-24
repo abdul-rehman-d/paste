@@ -17,7 +17,7 @@ export default function WithNavAndFooterLayout({
         </h1>
       </header>
 
-      <main className="grow">{children}</main>
+      <main className="grow flex flex-col">{children}</main>
 
       <footer className="border-t py-4 text-xs sm:text-sm">
         <p>

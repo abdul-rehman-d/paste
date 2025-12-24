@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { redirect } from "next/navigation";
 import { api } from "@/convex/_generated/api";
+import { getSession } from "@/lib/session";
 import { slugify } from "@/lib/utils";
 
 export async function createRoomAction(input: {
@@ -50,4 +51,29 @@ export async function createRoomAction(input: {
   }
 
   redirect(`/${roomSlug}`);
+}
+
+export async function unlockRoom(input: { roomSlug: string; pin: string }) {
+  const slug = input.roomSlug.trim() ?? "";
+  const pin = input.pin.trim() ?? "";
+
+  if (!slug) redirect("/");
+
+  const room = await fetchQuery(api.room.getRoom, { slug });
+
+  if (!room) redirect("/");
+
+  const isValid = await bcrypt.compare(pin, room.pinHash);
+
+  if (!isValid) {
+    return {
+      fields: { pin: { message: "Incorrect pin" } },
+    };
+  }
+
+  const session = await getSession();
+  session.unlockedRoom = slug;
+  await session.save();
+
+  redirect(`/${slug}/unlocked`);
 }

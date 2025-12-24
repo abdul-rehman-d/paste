@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { EnterPinForm } from "@/components/enter-pin-form";
 import { getSession } from "@/lib/session";
+import RoomPageClient from "./client-page";
 
 export default async function RoomPage({
   params,
@@ -12,7 +12,7 @@ export default async function RoomPage({
   const session = await getSession();
   const ok = session.unlockedRoom === roomSlug;
 
-  if (ok) redirect(`/${roomSlug}/unlocked`);
+  if (!ok) redirect(`/${roomSlug}`);
 
-  return <EnterPinForm roomSlug={roomSlug} />;
+  return <RoomPageClient roomSlug={roomSlug} />;
 }
