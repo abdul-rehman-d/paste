@@ -1,5 +1,6 @@
 import { fetchQuery } from "convex/nextjs";
 import { redirect } from "next/navigation";
+import { Toaster } from "@/components/ui/toast";
 import { api } from "@/convex/_generated/api";
 
 export default async function WithNavAndFooterLayout({
@@ -17,6 +18,7 @@ export default async function WithNavAndFooterLayout({
     <div className="grow flex flex-col gap-4">
       <h2 className="text-2xl">Room: {roomName}</h2>
       {children}
+      <Toaster />
     </div>
   );
 }
